@@ -1,0 +1,26 @@
+задания по id пользователя(задания пользователя)(ВСЕ!!!)
+SELECT p.name, t.name, is_done
+from task t
+join user u on t.user_id = u.id
+join project p on t.project_id = p.id
+where u.id = ?
+
+задания по id пользователя для конкретного проекта по id(задания пользователя)
+SELECT t.name, is_done
+from task t
+join user u on t.user_id = u.id
+join project p on t.project_id = p.id
+where u.id = ? and p.id = ?
+
+все проекты для пользователя по id(проекты пользователя)
+select p.name, up.is_admin
+from project p
+join user_project up on up.project_id = p.id
+WHERE up.user_id = ?
+
+все задания для пользователей в конкрутном проекте
+select t.name, u.username, p.name
+from task t
+join user u on t.user_id = u.id
+join project p on t.project_id = p.id
+where t.project_id = ?
