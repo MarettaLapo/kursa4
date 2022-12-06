@@ -15,3 +15,9 @@ user(app);
 
 var project = require('./app/route/project.route.js');
 project(app);
+
+var user_project = require('./app/route/user_project.route.js');
+project(app);
+
+var task = require('./app/route/task.route.js');
+project(app);
