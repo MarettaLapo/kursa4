@@ -39,7 +39,7 @@ exports.addUserForProject = (req, res) =>{ //добавление пользов
 //get запросы
 exports.findAllProjectsForUser = (req, res) => { //все проекты для пользователя
     db.sequelize.query(
-        `select p.name as project_name, up.is_admin
+        `select p.id as project_id, p.name as project_name, up.is_admin
             from project p
             join user_project up on up.project_id = p.id
             WHERE up.user_id = ?`,  

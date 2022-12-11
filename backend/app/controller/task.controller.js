@@ -16,6 +16,25 @@ exports.createTask = (req, res) => { //создание нового задан�
     })
 };
 
+exports.updateTask = (req, res) => {
+    Task.update({
+        name: req.body.name,
+        is_done: req.body.is_done,
+        user_id: req.body.user_id,
+        project_id: req.body.project_id
+    },
+    {
+        where:{
+            id: req.params.id
+        }
+    }
+    ).then(object => {
+        globalFunctions.sendResult(res, object);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
+
 //get запросы
 exports.findAllTaskForAllProjects = (req, res) => { //все задания по всем проектам пользователя
     db.sequelize.query(
