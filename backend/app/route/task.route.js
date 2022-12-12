@@ -2,7 +2,7 @@ module.exports = (app) => {
 
     const task = require('../controller/task.controller');
     
-    app.get('/api/allTasks', task.findAllTaskForAllProjects); 
+    app.get('/api/allTasks/userId=:user_id', task.findAllTaskForAllProjects); 
 
     app.get('/api/Task', task.findTaskForProject);
 

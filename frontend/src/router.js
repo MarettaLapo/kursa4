@@ -1,20 +1,22 @@
 import { createWebHistory, createRouter } from "vue-router";
 // импорт компонентов
-import UserProject from "./components/UserProject/UserProject"; //главная страница проекта
+import UserProjects from "./components/UserProject/UserProjects"; //главная страница проекта
 import AddUsersForProject from "./components/UserProject/AddUsersForProject";
 import AddTasksForProject from "./components/UserProject/AddTasksForProject";
 import AllTasks from "./components/Task/AllTasks";
-import Tasks from "./components/Task/Tasks";
+import helloTasks from "./components/Task/helloTasks";
 import TasksUsers from "./components/Task/TasksUsers";
+import Login from "./components/authorization/Login";
+import Register from "./components/authorization/Register";
 //определяются get запросы в основном(отображаемые страницы)
 //определяем маршруты
 const routes = [
     //главная страница проектов пользователя
     //на ней список проектов пользоваетеля и кнопка добавления нового проекта
     {
-        path: "/UserProject",
-        name: "users-project",
-        component: UserProject,
+        path: "/UserProjects",
+        name: "user-projects",
+        component: UserProjects,
         props: true,
         meta: {
             title: "Проекты пользователя"
@@ -60,12 +62,28 @@ const routes = [
     },
     //страница для заданий пользователя(с указанием id проекта)
     {
-        path: "/Tasks",
-        name: "tasks",
-        component: Tasks,
+        path: "/helloTasks/:id",
+        name: "project-details",
+        component: helloTasks,
         props: true,
         meta: {
             title: "Задания для проекта"
+        }
+    },
+    {
+        path: "/login",
+        name: "login-user",
+        component: Login,
+        meta: {
+            title: "Вход в систему"
+        }
+    },
+    {
+        path: "/register",
+        name: "register-user",
+        component: Register,
+        meta: {
+            title: "Регистрация"
         }
     },
 ];

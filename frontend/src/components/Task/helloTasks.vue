@@ -1,5 +1,5 @@
-//все задания для пользователей определенного проекта
-//запросы: exports.findTasksForAllUsers
+//задания по определенному проекту
+//запросы: exports.findTaskForProject
 <template>
     <div id="app">
       <nav>

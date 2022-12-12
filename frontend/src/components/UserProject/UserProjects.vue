@@ -1,11 +1,11 @@
-//все задания для всех проектов
-//запросы: exports.findAllTaskForAllProjects
+//главная страница(кнопка добавления и список проектов пользователя)
+//запросы: exports.createProject(post), exports.findAllProjectsForUser(get)
 <template>
   <div class="row">
       <div class="col-sm-5">
           <h4>Мои проекты</h4>
           <ul class="list-group">
-              <li class="list-group-item" v-for="(task, index) in taskProjects" :key="index">
+              <li class="list-group-item" v-for="(project, index) in userProjects" :key="index">
                   <router-link :to="{
                           name: 'project-details',
                           params: { id: project.id }
@@ -26,10 +26,10 @@
 <script>
   import http from "../../http-common";
   export default {
-      name: "AllTasks",
+      name: "UserProject",
       data() {
           return {
-              taskProjects: [],
+              userProjects: [],
           };
       },
       computed: {
@@ -38,12 +38,12 @@
           }
       },
       methods: {
-        findAllTaskForAllProjects() {
+        findAllProjectsForUser() {
               if (this.currentUser) {
                   http
-                      .get("/allTasks/userId=" + this.currentUser.id)
+                      .get("/projects/userId=" + this.currentUser.id)
                       .then(response => {
-                          this.taskProjects = response.data;
+                          this.userProjects = response.data;
                       })
                       .catch(e => {
                           console.log(e);
