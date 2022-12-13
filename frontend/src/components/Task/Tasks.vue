@@ -1,5 +1,8 @@
 //все задания для всех проектов
 //запросы: exports.findAllTaskForAllProjects
+//список названий проектов и их задач(запрос -> exports.findAllTaskForAllProjects)
+//каждая строка это ссылка(если название проекта на нужное /ProjectInfo)(если задача, то на /ProjectTasks)
+//для каждой задачи отображать кнопки для отметки сделанного(запрос -> task.updateTask)
 <template>
   <div class="row">
       <div class="col-sm-5">

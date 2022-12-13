@@ -1,14 +1,25 @@
 //главная страница(кнопка добавления и список проектов пользователя)
 //запросы: exports.createProject(post), exports.findAllProjectsForUser(get)
+//на ней выводится список проектов этого пользователя(через этот запрос -> exports.findAllProjectsForUser(get))
+//каждая эта строка ведет на /ProjectInfo, то есть нужен id проекта
+//так как мы зарегались за пользователя его id всегда можно получить через:
+//computed: {
+//    currentUser() {
+//        return this.$store.state.auth.user;
+//    }
+//},
+//есть кнопка для добавления своего проекта(через этот запрос -> exports.createProject(post))
+//при нажатии ведет на страницу /AddUsersForProject(для перехода использовать -> this.$router.push('/AddUsersForProject');)
+//на беке смотри что надо передавать(в route и controller) 
 <template>
   <div class="row">
       <div class="col-sm-5">
           <h4>Мои проекты</h4>
           <ul class="list-group">
-              <li class="list-group-item" v-for="(project, index) in userProjects" :key="index">
+              <li class="list-group-item" v-for="(project, index) in userProjects" :key="index"> // это просто массив данных, которые мы получили ниже
                   <router-link :to="{
-                          name: 'user-projects',
-                          params: { id: project.id }
+                          name: 'user-projects', //берется из router.js
+                          params: { id: project.id } //нужный параметр(в запросы, там где "?")
                       }">
                       {{project.project_name}}
                   </router-link>

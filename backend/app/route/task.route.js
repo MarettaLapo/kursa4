@@ -4,11 +4,12 @@ module.exports = (app) => {
     
     app.get('/api/allTasks/userId=:user_id', task.findAllTaskForAllProjects); 
 
-    app.get('/api/Task', task.findTaskForProject);
+    app.get('/api/findTaskForProject/userId=:user_id&projectId=:project_id', task.findTaskForProject);
 
-    app.get('/api/projectTasks', task.findTasksForAllUsers);
+    app.get('/api/findTasksForAllUsers/projectId=:project_id', task.findTasksForAllUsers);
 
     app.post('/api/createTask', task.createTask);
 
-    app.post('/api/updateTask', task.updateTask); //для отметки готовности задачи
+    app.post('/api/updateTask/:id', task.updateTask); //для отметки готовности задачи
+    //посмотреть как делалась отметка от изменении админа
 };

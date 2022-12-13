@@ -26,3 +26,22 @@ exports.findByUsername = (req, res) => {
         globalFunctions.sendError(res, err);
     })
 };
+
+exports.findUsersInProject = (req, res) => { //все проекты для пользователя
+    db.sequelize.query(
+        `select u.id, u.username 
+        from user u 
+        join user_project up on up.user_id = u.id 
+        where up.project_id = ? 
+        order by u.username`,  
+        {
+            type: db.sequelize.QueryTypes.SELECT,
+            replacements: [req.params.project_id] // подстановка параметров
+        })
+        .then(objects => {
+            globalFunctions.sendResult(res, objects);
+        })
+        .catch(err => {
+            globalFunctions.sendError(res, err);
+        })
+};
