@@ -7,7 +7,7 @@
           <ul class="list-group">
               <li class="list-group-item" v-for="(project, index) in userProjects" :key="index">
                   <router-link :to="{
-                          name: 'project-details',
+                          name: 'user-projects',
                           params: { id: project.id }
                       }">
                       {{project.project_name}}
@@ -17,7 +17,8 @@
 
           <h5>Добавить новый проект</h5>
           <form @submit="createProject">
-            
+            <input type="text" name="name" id="name" placeholder="Название проекта" required v-model="project.name">
+            <input type="submit" value="Добавить">         
           </form>
       </div>
   </div>
@@ -30,6 +31,9 @@
       data() {
           return {
               userProjects: [],
+              project: {
+                name: ""
+            }
           };
       },
       computed: {
@@ -49,8 +53,22 @@
                           console.log(e);
                       });
               }
-          },
-      },
+        },
+        createProject(){
+            var data = {
+                    name: this.project.name,
+                    user_id: this.currentUser.id
+                };
+                http
+                    .post("/createProject", data)
+                    .then(() => { // запрос выполнился успешно
+                        this.$router.push('/AddUsersForProject');
+                    })
+                    .catch(e => { // при выполнении запроса возникли ошибки
+                        console.log(e);
+                    });
+            },
+        },
       mounted() {
           this.findAllProjectsForUser();
       }

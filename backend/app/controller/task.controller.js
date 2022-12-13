@@ -4,6 +4,7 @@ var Task = db.task;
 
 //post запросы
 exports.createTask = (req, res) => { //создание нового задания для пользователя
+    console.log(1)
     Task.create({
         name: req.body.name,
         is_done: false,

@@ -3,9 +3,9 @@ import { createWebHistory, createRouter } from "vue-router";
 import UserProjects from "./components/UserProject/UserProjects"; //главная страница проекта
 import AddUsersForProject from "./components/UserProject/AddUsersForProject";
 import AddTasksForProject from "./components/UserProject/AddTasksForProject";
-import AllTasks from "./components/Task/AllTasks";
-import helloTasks from "./components/Task/helloTasks";
-import TasksUsers from "./components/Task/TasksUsers";
+import ProjectInfo from "./components/Task/ProjectInfo"; //инфа по проекту
+import ProjectTasks from "./components/Task/ProjectTasks";
+import Tasks from "./components/Task/Tasks";
 import Login from "./components/authorization/Login";
 import Register from "./components/authorization/Register";
 //определяются get запросы в основном(отображаемые страницы)
@@ -42,9 +42,9 @@ const routes = [
     },
     //страница фулл инфы по определенному проекту
     {
-        path: "/TasksUsers",
-        name: "tasks-users",
-        component: TasksUsers,
+        path: "/ProjectInfo/:id",
+        name: "project-details",
+        component: ProjectInfo,
         props: true,
         meta: {
             title: "Информация по проекту"
@@ -52,9 +52,9 @@ const routes = [
     },
     //страница для всех заданий пользователя(без указания id проекта)
     {
-        path: "/AllTasks",
-        name: "all-task",
-        component: AllTasks,
+        path: "/Tasks",
+        name: "user-tasks",
+        component: Tasks,
         props: true,
         meta: {
             title: "Задания"
@@ -62,9 +62,9 @@ const routes = [
     },
     //страница для заданий пользователя(с указанием id проекта)
     {
-        path: "/helloTasks/:id",
-        name: "project-details",
-        component: helloTasks,
+        path: "/ProjectTasks/:id",
+        name: "project-tasks",
+        component: ProjectTasks,
         props: true,
         meta: {
             title: "Задания для проекта"
