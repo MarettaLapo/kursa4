@@ -2,6 +2,7 @@ import { createApp } from 'vue' // Импорт метода для создан
 import App from './App.vue' // Импорт главного компонента
 import router from './router' // Маршрутизация
 import store from './store';
+import 'bootstrap/dist/css/bootstrap.css'// Подключение Bootstrap
 
 const app = createApp(App); // Создание экземпляра приложения
 app.use(router); // Подключение маршрутизации

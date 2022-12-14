@@ -1,24 +1,31 @@
 <template>
-    <div class="col-md-5">
-        <h4 class="mx-auto mt-4">Вход в систему</h4>
-        <form name="form" @submit="handleLogin">
-            <div class="form-group">
-                <input type="text" class="form-control" name="username" placeholder="Логин" v-model="user.username" required/>
+    <div class="col-md-3 mx-auto">
+        <h4>.</h4>
+        <h4>Вход в систему</h4>
+        <form name="form" class="mt-20" @submit="handleLogin">
+            <div class="form-group mx-auto">
+                <input type="text" class="mt-2 form-control" name="username" placeholder="Логин" v-model="user.username" required/>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Пароль" v-model="user.password" required/>
+                <input type="password" class="mt-2 form-control" name="password" placeholder="Пароль" v-model="user.password" required/>
             </div>
-            <div class="form-group">
-                <button class="btn btn-primary" :disabled="loading">
-                    <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-                    <span>Войти</span>
-                </button>
-            </div>
-            <router-link to="/register">
-                Зарегистрироваться
-            </router-link>
-            <div class="form-group">
-                <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+            <div class="mt-2 container">
+                <div class="row">
+                    <div class="col align-self-start">
+                        <button class="col-md-12 btn btn-dark" :disabled="loading">
+                            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                            <span>Войти</span>
+                        </button>
+                    </div>
+                    <div class="col align-self-end">
+                        <router-link class="btn btn-dark" to="/register">
+                            Зарегистрироваться
+                        </router-link>
+                    </div>
+                    <div class="form-group">
+                        <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -54,7 +61,7 @@
                 this.loading = true;
                 this.$store.dispatch("auth/login", this.user) // обращаемся к методу login, который определён в auth.service.js
                     .then(() => {
-                        window.location.href = '/'; // авторизация прошла успешно, переходим к главной странице. Используем такую конструкцию, а не this.$router.push, так как требуется перезагрузить страницу для обновления локального хранилища
+                        window.location.href = '/UserProjects'; // авторизация прошла успешно, переходим к главной странице. Используем такую конструкцию, а не this.$router.push, так как требуется перезагрузить страницу для обновления локального хранилища
                     })
                     .catch(e => {
                             this.loading = false;

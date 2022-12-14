@@ -1,24 +1,28 @@
 <template>
-    <div class="col-md-5">
-        <h4 class="mx-auto mt-4">Регистрация пользователя</h4>
-        <form name="form" @submit="handleRegister">
-            <div v-if="!successful">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="Логин" v-model="user.username" required/>
+    <div class="col-md-3 mx-auto">
+        <div>
+            <h4>.</h4>
+            <h4>Регистрация пользователя</h4>
+            <form name="form" @submit="handleRegister">
+                <div v-if="!successful">
+                    <div class="form-group">
+                        <input type="text" class="item form-control" name="username" placeholder="Логин" v-model="user.username" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="item mt-2 form-control" name="password" placeholder="Пароль" v-model="user.password" required/>
+                    </div>
+                    <div class="form-group">
+                        <button class="item mt-2 btn btn-dark">Зарегистрировать</button>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Пароль" v-model="user.password" required/>
+                    <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-primary">Зарегистрировать</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </template>
+
 <script>
     export default {
         name: 'RegisterUser',

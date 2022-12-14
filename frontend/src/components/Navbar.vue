@@ -1,24 +1,22 @@
 <template>
-    <div id="app">
-      <nav>
-        <router-link class="item navbar-brand text-light" to="/UserProjects">Проекты</router-link>
-        <div v-if="currentUser">
-    <router-link to="/profile" class="navbar-brand text-light">
-        <div class="enter-font" size="4">
-        {{ currentUser.name }}
-        </div>
-    </router-link>
-    <a href @click.prevent="logOut" class="navbar-brand text-light">
-        Выйти
-    </a>
-    </div>
-<div v-else>
-    <router-link to="/login" class="navbar-brand text-light">
-        Войти
-    </router-link>
-</div>
-      </nav>
-    </div>
+        <nav class="navbar navbar-dark bg-dark fixed-top">
+            <router-link class="item navbar-brand text-light mx-2" to="/UserProjects">Проекты</router-link>
+            <div v-if="currentUser">
+                <router-link to="/profile" class="navbar-brand text-light">
+                    <div class="enter-font" size="4">
+                        {{ currentUser.name }}
+                    </div>
+                </router-link>
+                <a href @click.prevent="logOut" class="navbar-brand text-light">
+                    Выйти
+                </a>
+            </div>
+            <div v-else>
+                <router-link to="/login" class="navbar-brand text-light">
+                    Войти
+                </router-link>
+            </div>
+        </nav>
   </template>
   
   <script>

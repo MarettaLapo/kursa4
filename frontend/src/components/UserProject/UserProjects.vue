@@ -13,24 +13,28 @@
 //на беке смотри что надо передавать(в route и controller) 
 <template>
   <div class="row">
-      <div class="col-sm-5">
-          <h4>Мои проекты</h4>
-          <ul class="list-group">
-              <li class="list-group-item" v-for="(project, index) in userProjects" :key="index"> // это просто массив данных, которые мы получили ниже
+      <div class="col-sm-5 col-md-5 container">
+          <h4 class="mt-5">Мои проекты</h4>
+          <h5>Добавить новый проект</h5>
+          <form>
+            <div class="d-grid gap-2 d-md-flex">
+                <div class="col-md-10">
+                    <input type="text" name="name" id="name" class="mt-2 form-control" placeholder="Название проекта" required v-model="project.name">
+                </div>
+                <router-link @click="createProject" class="mt-2 btn btn-dark" to="/AddUsersForProject">Добавить</router-link>
+            </div>
+          </form>
+
+          <ul class="mt-2 list-group">
+              <li class="list-group-item" v-for="(project, index) in userProjects" :key="index">
                   <router-link :to="{
                           name: 'user-projects', //берется из router.js
-                          params: { id: project.id } //нужный параметр(в запросы, там где "?")
+                          params: { id: project.id }
                       }">
                       {{project.project_name}}
                   </router-link>
               </li>
-          </ul>
-
-          <h5>Добавить новый проект</h5>
-          <form @submit="createProject">
-            <input type="text" name="name" id="name" placeholder="Название проекта" required v-model="project.name">
-            <input type="submit" value="Добавить">         
-          </form>
+          </ul>          
       </div>
   </div>
 </template>
@@ -53,7 +57,7 @@
           }
       },
       methods: {
-        findAllProjectsForUser() {
+            findAllProjectsForUser() {
               if (this.currentUser) {
                   http
                       .get("/projects/userId=" + this.currentUser.id)
@@ -73,15 +77,15 @@
                 http
                     .post("/createProject", data)
                     .then(() => { // запрос выполнился успешно
-                        this.$router.push('/AddUsersForProject');
+                        this.$router.go('/AddUsersForProject');
                     })
                     .catch(e => { // при выполнении запроса возникли ошибки
                         console.log(e);
                     });
             },
         },
-      mounted() {
+    mounted() {
           this.findAllProjectsForUser();
-      }
+    }  
   }
 </script>
