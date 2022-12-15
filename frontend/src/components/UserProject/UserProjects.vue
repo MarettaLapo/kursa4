@@ -12,7 +12,7 @@
 //при нажатии ведет на страницу /AddUsersForProject(для перехода использовать -> this.$router.push('/AddUsersForProject');)
 //на беке смотри что надо передавать(в route и controller) 
 <template>
-  <div class="row">
+  <div class="row">//что-то
       <div class="col-sm-5 col-md-5 container">
           <h4 class="mt-5">Мои проекты</h4>
           <h5>Добавить новый проект</h5>
