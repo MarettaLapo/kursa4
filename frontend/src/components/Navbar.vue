@@ -1,6 +1,7 @@
 <template>
         <nav class="navbar navbar-dark bg-dark fixed-top">
             <router-link class="item navbar-brand text-light mx-2" to="/UserProjects">Проекты</router-link>
+            <router-link class="item navbar-brand text-light mx-2" to="/Tasks">Задачи</router-link>
             <div v-if="currentUser">
                 <router-link to="/profile" class="navbar-brand text-light">
                     <div class="enter-font" size="4">

@@ -19,10 +19,7 @@ exports.createTask = (req, res) => { //создание нового задан�
 
 exports.updateTask = (req, res) => {
     Task.update({
-        name: req.body.name,
         is_done: req.body.is_done,
-        user_id: req.body.user_id,
-        project_id: req.body.project_id
     },
     {
         where:{
@@ -38,12 +35,13 @@ exports.updateTask = (req, res) => {
 
 //get запросы
 exports.findAllTaskForAllProjects = (req, res) => { //все задания по всем проектам пользователя
+    console.log(1);
     db.sequelize.query(
-        `SELECT p.name as project_name, p.id as project_id, t.name as task_name, t.id as task_id, is_done
+        `SELECT t.project_id as project_id, t.name as task_name, t.id as task_id, is_done
             from task t
             join user u on t.user_id = u.id
-            join project p on t.project_id = p.id
-            where u.id = ?`,
+            where u.id = ?
+            order by t.project_id`,
         {
             type: db.sequelize.QueryTypes.SELECT,
             replacements: [req.params.user_id] // подстановка параметров
@@ -55,6 +53,28 @@ exports.findAllTaskForAllProjects = (req, res) => { //все задания по
             globalFunctions.sendError(res, err);
         })
 };
+
+exports.findAllProjects = (req, res) => { //проекты пользователя с задачами
+    console.log(1);
+    db.sequelize.query(
+        `SELECT p.name as project_name, t.project_id as project_id
+        from task t
+        join project p on p.id = t.project_id
+        join user u on t.user_id = u.id
+        where u.id = ?
+        GROUP by p.name`,
+        {
+            type: db.sequelize.QueryTypes.SELECT,
+            replacements: [req.params.user_id] // подстановка параметров
+        })
+        .then(objects => {
+            globalFunctions.sendResult(res, objects);
+        })
+        .catch(err => {
+            globalFunctions.sendError(res, err);
+        })
+};
+
 
 exports.findTaskForProject = (req, res) => { //все задания по определенному проекту пользователя
     db.sequelize.query(

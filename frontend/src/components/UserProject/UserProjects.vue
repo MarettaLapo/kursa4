@@ -28,8 +28,8 @@
           <ul class="mt-2 list-group">
               <li class="list-group-item" v-for="(project, index) in userProjects" :key="index">
                   <router-link :to="{
-                          name: 'user-projects', //берется из router.js
-                          params: { id: project.id }
+                          name: 'project-details', //берется из router.js
+                          params: { id: project.project_id }
                       }">
                       {{project.project_name}}
                   </router-link>

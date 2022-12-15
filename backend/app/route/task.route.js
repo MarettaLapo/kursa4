@@ -4,9 +4,11 @@ module.exports = (app) => {
     
     app.get('/api/allTasks/userId=:user_id', task.findAllTaskForAllProjects); 
 
+    app.get('/api/allProject/userId=:user_id', task.findAllProjects);
+
     app.get('/api/findTaskForProject/userId=:user_id&projectId=:project_id', task.findTaskForProject);
 
-    app.get('/api/findTasksForAllUsers/projectId=:project_id', task.findTasksForAllUsers);
+    app.get('/api/findTa sksForAllUsers/projectId=:project_id', task.findTasksForAllUsers);
 
     app.post('/api/createTask', task.createTask);
 
