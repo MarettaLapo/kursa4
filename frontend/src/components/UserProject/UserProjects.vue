@@ -21,7 +21,7 @@
                 <div class="col-md-10">
                     <input type="text" name="name" id="name" class="mt-2 form-control" placeholder="Название проекта" required v-model="project.name">
                 </div>
-                <router-link @click="createProject" class="mt-2 btn btn-dark" to="/AddUsersForProject">Добавить</router-link>
+                <button @click="createProject" class="mt-2 btn btn-dark">Добавить</button>
             </div>
           </form>
 
@@ -48,7 +48,7 @@
               userProjects: [],
               project: {
                 name: ""
-            }
+              },
           };
       },
       computed: {
@@ -69,15 +69,16 @@
                       });
               }
         },
-        createProject(){
+        createProject(e){
+            e.preventDefault();
             var data = {
                     name: this.project.name,
                     user_id: this.currentUser.id
                 };
                 http
                     .post("/createProject", data)
-                    .then(() => { // запрос выполнился успешно
-                        this.$router.go('/AddUsersForProject');
+                    .then(response => { // запрос выполнился успешно
+                        this.$router.push('/AddUsersForProject/' + response.data.project_id);
                     })
                     .catch(e => { // при выполнении запроса возникли ошибки
                         console.log(e);

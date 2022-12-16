@@ -24,7 +24,7 @@ const routes = [
     },
     //добавление других пользователей в проект
     {
-        path: "/AddUsersForProject",
+        path: "/AddUsersForProject/:id",
         name: "users-for-project",
         component: AddUsersForProject,
         meta: {

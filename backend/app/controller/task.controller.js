@@ -97,7 +97,7 @@ exports.findTaskForProject = (req, res) => { //все задания по опр
 
 exports.findTasksForAllUsers = (req, res) => { //все задания по определенному проекту
     db.sequelize.query(
-        `select t.name as task_name, t.id as task_id, u.username as username, u.id as user_id, p.name as project_name
+        `select t.name as task_name, t.id as task_id, t.is_done, u.username as username, u.id as user_id, p.name as project_name
             from task t
             join user u on t.user_id = u.id
             join project p on t.project_id = p.id

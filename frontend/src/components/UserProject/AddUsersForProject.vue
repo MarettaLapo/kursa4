@@ -16,7 +16,6 @@
             <input type="submit" class="mt-2 btn btn-dark" value="Поиск">
           </div>
         </form>
-
         <ul class="mt-2 list-group">
             <li class="list-group-item" v-for="(username, index) in users" :key="index">
                 <div class="d-grid gap-2 d-md-flex">
@@ -46,6 +45,11 @@
                     name: ""
                 }
             };
+        },
+        computed: {
+            currentProject() {
+                return this.$route.params.id;
+            }
         },
         methods: {
           addUserForProject(e) {

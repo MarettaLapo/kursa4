@@ -7,5 +7,7 @@ module.exports = (app) => {
     
     app.get('/api/user/username/:username', user.findByUsername); //поиск по нику для добавления в проект
 
-    app.get('/api/user/findUsersInProject/projectId=:project_id', user.findUsersInProject); //пользователи для проекта
+    app.get('/api/findUsersInProject/projectId=:project_id', user.findUsersInProject); //пользователи для проекта
+
+    app.get('/api/findUsersWithTasks/projectId=:project_id', user.findUsersWithTasks);
 };

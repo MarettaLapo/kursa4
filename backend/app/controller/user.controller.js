@@ -45,3 +45,23 @@ exports.findUsersInProject = (req, res) => { //все проекты для по
             globalFunctions.sendError(res, err);
         })
 };
+
+exports.findUsersWithTasks = (req, res) => { //все проекты для пользователя
+    db.sequelize.query(
+        `select u.username as username, u.id as user_id
+        from task t
+        join user u on t.user_id = u.id
+        where t.project_id = ?
+        GROUP by u.username
+        ORDER by u.username`,  
+        {
+            type: db.sequelize.QueryTypes.SELECT,
+            replacements: [req.params.project_id] // подстановка параметров
+        })
+        .then(objects => {
+            globalFunctions.sendResult(res, objects);
+        })
+        .catch(err => {
+            globalFunctions.sendError(res, err);
+        })
+};
