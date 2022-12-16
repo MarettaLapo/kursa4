@@ -16,11 +16,16 @@ var User = db.user;
 
 // Для добавления пользователей в проект по username
 exports.findByUsername = (req, res) => {
-    User.findAll({
-        where: {
-            username: { [Op.like]: `%${req.params.username}%` }
-        }
-    }).then(objects => {
+    db.sequelize.query(
+        `select u.username, u.id
+        from user u
+        where not u.id = ? and u.username like ?
+        GROUP by u.username`,  
+        {
+            type: db.sequelize.QueryTypes.SELECT,
+            replacements: [req.params.user_id, '%' + req.params.username + '%'] // подстановка параметров
+        })
+    .then(objects => {
         globalFunctions.sendResult(res, objects);
     }).catch(err => {
         globalFunctions.sendError(res, err);

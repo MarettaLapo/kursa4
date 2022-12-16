@@ -20,52 +20,83 @@
             <li class="list-group-item" v-for="(username, index) in users" :key="index">
                 <div class="d-grid gap-2 d-md-flex">
                   <div class="my-auto mx-5">{{username.username}}</div>
-                  <button @click="addUserForProject()" class="mx-auto btn btn-dark">Добавить в проект</button>
-                  <!-- <input type="submit" class="mr-auto md-2 btn btn-dark" value="Добавить"> -->
+                  <button @click="addUserForProject(username.id)" class="mx-auto btn btn-dark">Добавить в проект</button>
                 </div>
             </li>
         </ul>
-
+        <h4>Пользователи в проекте</h4>
         <ul class="mt-2 list-group">
-          <li class="list-group-item" v-for="(elem, index) in users" :key="index">
-            
-          </li>
-            <router-link class="item btn btn-dark" to="/AddTasksForProject">Назначить задачи</router-link>
+            <li class="list-group-item" v-for="(user, index) in currentUsers" :key="index">
+                <div class="d-grid gap-2 d-md-flex">
+                  <div class="my-auto mx-5">{{user.username}}</div>
+                </div>
+            </li>
         </ul>
+        <button @click="goto()" class="mx-auto btn btn-dark">Добавить задачи</button>
     </div>
 </template>
 
 <script>
     import http from "../../http-common";
     export default {
-        name: "addUserForProject",
+        name: "addUsersForProject",
         data() {
             return {
-                category: {
-                    name: ""
-                }
+                username: "",
+                users: [],
+                currentUsers: [],
             };
         },
         computed: {
             currentProject() {
                 return this.$route.params.id;
-            }
+            },
+            currentUser() {
+              return this.$store.state.auth.user;
+          }
         },
         methods: {
-          addUserForProject(e) {
-                e.preventDefault(); // запрет отправки формы, так как обрабатывать будем с помощью методов axios
+            findByUsername(e) {
+                e.preventDefault();
+                  http
+                      .get("/username/userId="+ this.currentUser.id + "&usernameh=" + this.username)
+                      .then(response => {
+                          this.users = response.data;
+                      })
+                      .catch(e => {
+                          console.log(e);
+                      });
+            },
+            addUserForProject(id_user){
                 var data = {
-                    name: this.category.name
+                    user_id: id_user,
+                    project_id: this.currentProject
                 };
                 http
-                    .post("/addCategory", data)
+                    .post("/addUserForProject", data)
                     .then(() => { // запрос выполнился успешно
-                        this.$router.push('/listCategories'); // переходим к списку категорий
+                        window.location.reload();
                     })
                     .catch(e => { // при выполнении запроса возникли ошибки
                         console.log(e);
                     });
+            },
+            findUsersInProject(){
+                http
+                      .get("/findUsersInProject/projectId=" + this.currentProject)
+                      .then(response => {
+                          this.currentUsers = response.data;
+                      })
+                      .catch(e => {
+                          console.log(e);
+                      });
+            },
+            goto(){
+                this.$router.push('/AddTasksForProject/' + this.currentProject);
             }
-        }
+        },
+        mounted() {
+            this.findUsersInProject();
+        } 
     }
 </script>
