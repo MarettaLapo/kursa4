@@ -10,7 +10,7 @@
           <h4>Информация</h4>
           <ul class="list-group">
               <li class="list-group-item" v-for="(user, index) in usersProject" :key="index">
-                      {{user.username}}   
+                      {{user.username}} 
                 <ul class="list-group">
                     <div v-for="(task, index) in tasksProject" :key="index">
                     <li class="list-group-item" v-if="user.user_id===task.user_id">
@@ -22,7 +22,11 @@
                     </div>
                 </ul>
               </li>
-          </ul>
+            </ul>
+            <div v-if="us() === currentUser.id">
+                <button @click="gotoUsers()" class="mx-auto btn btn-dark">Добавить пользователей</button>
+                <button @click="gotoTasks()" class="mx-auto btn btn-dark">Добавить задачи</button>
+            </div>
       </div>
   </div>
 </template>
@@ -80,7 +84,20 @@
                     .catch(e => { // при выполнении запроса возникли ошибки
                         console.log(e);
                     });                
-            },           
+            }, 
+            gotoUsers(){
+                this.$router.push('/AddUsersForProject/' + this.currentProject);
+            },
+            gotoTasks(){
+                this.$router.push('/AddTasksForProject/' + this.currentProject);
+            },  
+            us(){
+                for(var i in this.usersProject){
+                    if(this.usersProject[i].is_admin === 1){
+                        return this.usersProject[i].user_id;
+                    }
+                }
+            }        
     },
       mounted() {
         this.findTasksForAllUsers();
