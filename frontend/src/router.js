@@ -33,7 +33,7 @@ const routes = [
     },
     //добавление заданий для добавленых пользователей
     {
-        path: "/AddTasksForProject",
+        path: "/AddTasksForProject/:id",
         name: "tasks-for-project",
         component: AddTasksForProject,
         meta: {

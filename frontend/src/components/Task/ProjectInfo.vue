@@ -47,7 +47,6 @@
       },
       methods: {
         findTasksForAllUsers() {
-
                   http
                       .get("/findTasksForAllUsers/projectId=" + this.currentProject)
                       .then(response => {
@@ -80,10 +79,8 @@
                     })
                     .catch(e => { // при выполнении запроса возникли ошибки
                         console.log(e);
-                    });
-                
-            }, 
-          
+                    });                
+            },           
     },
       mounted() {
         this.findTasksForAllUsers();
