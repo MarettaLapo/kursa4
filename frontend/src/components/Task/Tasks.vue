@@ -5,7 +5,7 @@
 //для каждой задачи отображать кнопки для отметки сделанного(запрос -> task.updateTask)
 <template>
     <div class="row">
-        <div class="col-sm-5 col-md-5 container">
+        <div class="col-sm-5 col-md-5 container" v-if="displayContent">
           <h4 class="mt-5 px-2">Мои задачи</h4>
             <div class="container">
                   <ul class="mt-2 list-group">
@@ -46,17 +46,22 @@
             </div>
             
         </div>
+        <div v-else>
+            Контент доступен только авторизованным пользователям
+        </div>
     </div>
   </template>
 
 <script>
   import http from "../../http-common";
+  import UserService from '../../services/user.service';
   export default {
       name: "AllTasks",
       data() {
           return {
               taskProjects: [],
               userProjects: [],
+              displayContent: false,
           };
       },
       computed: {
@@ -107,6 +112,17 @@
             }    
     },
       mounted() {
+        UserService.getUserBoard()
+                .then(() => {
+                    this.displayContent = true;
+                })
+                .catch(e => {
+                        this.content =
+                            (e.response && e.response.data) ||
+                            e.message ||
+                            e.toString();
+                    }
+                );
           this.findAllTaskForAllProjects();
           this.findAllProjects();
       }

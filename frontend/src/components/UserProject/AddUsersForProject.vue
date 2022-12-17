@@ -5,7 +5,7 @@
 //route и controller инфа о том, какие данные отсылаются
 //с самом низу простая ссылка на следующую страницу для добавления заданий /AddTasksForProject
 <template>
-    <div class="col-sm-5 col-md-5 container">
+    <div class="col-sm-5 col-md-5 container" v-if="displayContent">
         <h4 class="mt-5">Поиск пользователей по нику</h4>
         <form @submit="findByUsername">
           <div class="d-grid gap-2 d-md-flex">
@@ -32,14 +32,17 @@
                   <div class="my-auto mx-5">{{user.username}}</div>
                 </div>
             </li>
-            <button @click="goto()" class="mt-2 btn btn-success">Добавить задачи</button>
+            <button @click="$router.push('/AddTasksForProject/' + this.currentProject)" class="mt-2 btn btn-success">Добавить задачи</button>
         </ul>
-        
+    </div>
+    <div v-else>
+            Контент доступен только авторизованным пользователям
     </div>
 </template>
 
 <script>
     import http from "../../http-common";
+    import UserService from '../../services/user.service';
     export default {
         name: "addUsersForProject",
         data() {
@@ -47,6 +50,7 @@
                 username: "",
                 users: [],
                 currentUsers: [],
+                displayContent: false,
             };
         },
         computed: {
@@ -93,11 +97,19 @@
                           console.log(e);
                       });
             },
-            goto(){
-                this.$router.push('/AddTasksForProject/' + this.currentProject);
-            }
         },
         mounted() {
+            UserService.getUserBoard()
+                .then(() => {
+                    this.displayContent = true;
+                })
+                .catch(e => {
+                        this.content =
+                            (e.response && e.response.data) ||
+                            e.message ||
+                            e.toString();
+                    }
+                );
             this.findUsersInProject();
         } 
     }

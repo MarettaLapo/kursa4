@@ -5,11 +5,11 @@
 //по факту это двухуровневый список
 <template>
   <div class="row">
-      <div class="col-sm-5 col-md-5 container">
+      <div class="col-sm-5 col-md-5 container" v-if="displayContent">
         <h4 class="mt-5">Информация</h4>
         <div v-if="us() === currentUser.id">
-                <button @click="gotoUsers()" class="mx-auto btn btn-dark">Добавить пользователей</button>
-                <button @click="gotoTasks()" class="mx-auto btn btn-dark">Добавить задачи</button>
+                <button @click="$router.push('/AddUsersForProject/' + this.currentProject)" class="mx-auto btn btn-dark">Добавить пользователей</button>
+                <button @click="$router.push('/AddTasksForProject/' + this.currentProject)" class="mx-auto btn btn-dark">Добавить задачи</button>
             </div>
             <ul class="list-group">
               <li class="list-group-item" v-for="(user, index) in usersProject" :key="index">
@@ -45,17 +45,22 @@
               </li>
           </ul>   
       </div>
+      <div v-else>
+            Контент доступен только авторизованным пользователям
+        </div>
   </div>
 </template>
 
 <script>
   import http from "../../http-common";
+  import UserService from '../../services/user.service';
   export default {
       name: "ProjectInfo",
       data() {
           return {
               tasksProject: [],
               usersProject:[],
+              displayContent: false,
           };
       },
       computed: {
@@ -101,13 +106,7 @@
                     .catch(e => { // при выполнении запроса возникли ошибки
                         console.log(e);
                     });                
-            }, 
-            gotoUsers(){
-                this.$router.push('/AddUsersForProject/' + this.currentProject);
-            },
-            gotoTasks(){
-                this.$router.push('/AddTasksForProject/' + this.currentProject);
-            },  
+            },   
             us(){
                 for(var i in this.usersProject){
                     if(this.usersProject[i].is_admin === 1){
@@ -117,6 +116,17 @@
             }        
     },
       mounted() {
+        UserService.getUserBoard()
+                .then(() => {
+                    this.displayContent = true;
+                })
+                .catch(e => {
+                        this.content =
+                            (e.response && e.response.data) ||
+                            e.message ||
+                            e.toString();
+                    }
+                );
         this.findTasksForAllUsers();
         this.findUsersWithTasks();
       }

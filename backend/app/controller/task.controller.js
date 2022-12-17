@@ -36,6 +36,8 @@ exports.updateTask = (req, res) => {
 exports.updateTextTask = (req, res) => {
     Task.update({
         name: req.body.name,
+        description: req.body.description,
+        is_done: req.body.is_done, 
     },
     {
         where:{

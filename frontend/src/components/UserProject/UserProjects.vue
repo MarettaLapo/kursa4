@@ -12,8 +12,8 @@
 //при нажатии ведет на страницу /AddUsersForProject(для перехода использовать -> this.$router.push('/AddUsersForProject');)
 //на беке смотри что надо передавать(в route и controller) 
 <template>
-  <div class="row">//что-то
-      <div class="col-sm-5 col-md-5 container">
+  <div class="row" >//что-то
+      <div class="col-sm-5 col-md-5 container" v-if="displayContent">
           <h5 class="mt-5">Добавить новый проект</h5>
           <form>
             <div class="d-grid gap-2 d-md-flex">
@@ -35,11 +35,15 @@
               </li>
           </ul>          
       </div>
+      <div v-else>
+            Контент доступен только авторизованным пользователям
+    </div>
   </div>
 </template>
 
 <script>
   import http from "../../http-common";
+  import UserService from '../../services/user.service';
   export default {
       name: "UserProject",
       data() {
@@ -48,6 +52,7 @@
               project: {
                 name: ""
               },
+              displayContent: false,
           };
       },
       computed: {
@@ -85,6 +90,17 @@
             },
         },
     mounted() {
+        UserService.getUserBoard()
+                .then(() => {
+                    this.displayContent = true;
+                })
+                .catch(e => {
+                        this.content =
+                            (e.response && e.response.data) ||
+                            e.message ||
+                            e.toString();
+                    }
+                );
           this.findAllProjectsForUser();
     }  
   }

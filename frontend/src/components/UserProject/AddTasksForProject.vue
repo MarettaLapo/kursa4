@@ -3,7 +3,7 @@
 //наверное надо сделать что сначала есть пустое поле для ввода 
 //в конце простая ссылка типа перейти к проекту /ProjectInfo/:id(id этого проекта)
 <template>
-  <div class="col-sm-5 col-md-5 container">
+  <div class="col-sm-5 col-md-5 container" v-if="displayContent">
       <h4 class="mt-5">Добавить задачи</h4>
       <form @submit="createTask">
         <div class="row">
@@ -28,12 +28,16 @@
                   </div>
               </ul>
             </li>
-            <button @click="goto()" class="mt-2 btn btn-success">Создать проект</button>
+            <button @click="$router.push('/ProjectInfo/' + this.currentProject);" class="mt-2 btn btn-success">Создать проект</button>
         </ul>
+  </div>
+  <div v-else>
+            Контент доступен только авторизованным пользователям
   </div>
 </template>
 <script>
 import http from "../../http-common";
+import UserService from '../../services/user.service';
 export default {
     name: "addTasksForProject",
     data() {
@@ -45,6 +49,7 @@ export default {
               name: "",
               user: "",
             },
+            displayContent: false,
         };
     },
     computed: {
@@ -103,11 +108,19 @@ export default {
                           console.log(e);
                       });          
           },
-          goto(){
-                this.$router.push('/ProjectInfo/' + this.currentProject);
-            }
     },
     mounted() {
+      UserService.getUserBoard()
+                .then(() => {
+                    this.displayContent = true;
+                })
+                .catch(e => {
+                        this.content =
+                            (e.response && e.response.data) ||
+                            e.message ||
+                            e.toString();
+                    }
+                );
         this.findUsersInProject();
         this.findTasksForAllUsers();
         this.findUsersWithTasks();

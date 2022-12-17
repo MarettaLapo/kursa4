@@ -1,5 +1,6 @@
 module.exports = (app) => {
-
+    
+    var { authJwt } = require("../middleware");
     const user = require('../controller/user.controller');
     
     // Получение всех пользователей
@@ -7,7 +8,7 @@ module.exports = (app) => {
     
     app.get('/api/username/userId=:user_id&usernameh=:username', user.findByUsername); //поиск по нику для добавления в проект
 
-    app.get('/api/findUsersInProject/projectId=:project_id', user.findUsersInProject); //пользователи для проекта
+    app.get('/api/findUsersInProject/projectId=:project_id', [authJwt.verifyToken], user.findUsersInProject); //пользователи для проекта
 
-    app.get('/api/findUsersWithTasks/projectId=:project_id', user.findUsersWithTasks);
+    app.get('/api/findUsersWithTasks/projectId=:project_id', [authJwt.verifyToken], user.findUsersWithTasks);
 };
