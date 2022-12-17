@@ -14,8 +14,7 @@
 <template>
   <div class="row">//что-то
       <div class="col-sm-5 col-md-5 container">
-          <h4 class="mt-5">Мои проекты</h4>
-          <h5>Добавить новый проект</h5>
+          <h5 class="mt-5">Добавить новый проект</h5>
           <form>
             <div class="d-grid gap-2 d-md-flex">
                 <div class="col-md-10">
@@ -24,7 +23,7 @@
                 <button @click="createProject" class="mt-2 btn btn-dark">Добавить</button>
             </div>
           </form>
-
+          <h5 class="mt-2">Мои проекты</h5>
           <ul class="mt-2 list-group">
               <li class="list-group-item" v-for="(project, index) in userProjects" :key="index">
                   <router-link :to="{

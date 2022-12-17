@@ -3,9 +3,7 @@
 //если чужие то просто список задач(без каких либо ссылок)
 
 <template>
-    <div id="app">
-      <nav>
-        <router-link class="item" to="/UserProject">Проекты</router-link>
-      </nav>
-    </div>
+      <div class="col-sm-5 col-md-5 container">
+        <h4 class="mt-5">Информация</h4>
+      </div>
   </template>

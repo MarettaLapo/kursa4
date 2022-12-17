@@ -53,9 +53,10 @@ exports.findUsersInProject = (req, res) => { //все проекты для по
 
 exports.findUsersWithTasks = (req, res) => { //все проекты для пользователя
     db.sequelize.query(
-        `select u.username as username, u.id as user_id
+        `select u.username as username, u.id as user_id, up.is_admin
         from task t
         join user u on t.user_id = u.id
+        join user_project up on up.user_id = u.id
         where t.project_id = ?
         GROUP by u.username
         ORDER by u.username`,  

@@ -19,7 +19,23 @@ exports.createTask = (req, res) => { //создание нового задан�
 
 exports.updateTask = (req, res) => {
     Task.update({
+        
         is_done: req.body.is_done,
+    },
+    {
+        where:{
+            id: req.params.id
+        }
+    }
+    ).then(object => {
+        globalFunctions.sendResult(res, object);
+    }).catch(err => {
+        globalFunctions.sendError(res, err);
+    })
+};
+exports.updateTextTask = (req, res) => {
+    Task.update({
+        name: req.body.name,
     },
     {
         where:{
@@ -53,7 +69,22 @@ exports.findAllTaskForAllProjects = (req, res) => { //все задания по
             globalFunctions.sendError(res, err);
         })
 };
-
+exports.findTask = (req, res) => { //все задания по всем проектам пользователя
+    db.sequelize.query(
+        `SELECT *
+            from task t
+            where t.id = ?`,
+        {
+            type: db.sequelize.QueryTypes.SELECT,
+            replacements: [req.params.task_id] // подстановка параметров
+        })
+        .then(objects => {
+            globalFunctions.sendResult(res, objects);
+        })
+        .catch(err => {
+            globalFunctions.sendError(res, err);
+        })
+};
 exports.findAllProjects = (req, res) => { //проекты пользователя с задачами
     console.log(1);
     db.sequelize.query(

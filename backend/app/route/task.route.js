@@ -9,9 +9,11 @@ module.exports = (app) => {
     app.get('/api/findTaskForProject/userId=:user_id&projectId=:project_id', task.findTaskForProject);
 
     app.get('/api/findTasksForAllUsers/projectId=:project_id', task.findTasksForAllUsers);
-
+    app.get('/api/findTask/:task_id', task.findTask);
     app.post('/api/createTask', task.createTask);
 
     app.post('/api/updateTask/:id', task.updateTask); //для отметки готовности задачи
+    //посмотреть как делалась отметка от изменении админа
+    app.post('/api/updateTextTask/:id', task.updateTextTask); //для отметки готовности задачи
     //посмотреть как делалась отметка от изменении админа
 };

@@ -6,24 +6,25 @@
 //с самом низу простая ссылка на следующую страницу для добавления заданий /AddTasksForProject
 <template>
     <div class="col-sm-5 col-md-5 container">
-        <h4>,</h4>
-        <h4>Поиск пользователей по нику</h4>
+        <h4 class="mt-5">Поиск пользователей по нику</h4>
         <form @submit="findByUsername">
           <div class="d-grid gap-2 d-md-flex">
             <div class="col-md-10">
                 <input type="text" name="username" id="username" class="mt-2 form-control" placeholder="Ник" required v-model="username">
             </div>
-            <input type="submit" class="mt-2 btn btn-dark" value="Поиск">
+            <input type="submit" class="mt-2 mx-auto btn btn-dark col" value="Поиск">
           </div>
         </form>
         <ul class="mt-2 list-group">
-            <li class="list-group-item" v-for="(username, index) in users" :key="index">
-                <div class="d-grid gap-2 d-md-flex">
-                  <div class="my-auto mx-5">{{username.username}}</div>
-                  <button @click="addUserForProject(username.id)" class="mx-auto btn btn-dark">Добавить в проект</button>
+            <li class="list-group-item container" v-for="(username, index) in users" :key="index">
+                <div class="row">
+                  <div class="my-auto mx-5 col">{{username.username}}</div>
+                  <button @click="addUserForProject(username.id)" class="mx-auto btn btn-warning col">Добавить в проект</button>
+                  <!-- <input type="submit" class="mr-auto md-2 btn btn-dark" value="Добавить"> -->
                 </div>
             </li>
         </ul>
+
         <h4>Пользователи в проекте</h4>
         <ul class="mt-2 list-group">
             <li class="list-group-item" v-for="(user, index) in currentUsers" :key="index">
@@ -31,8 +32,9 @@
                   <div class="my-auto mx-5">{{user.username}}</div>
                 </div>
             </li>
+            <button @click="goto()" class="mt-2 btn btn-success">Добавить задачи</button>
         </ul>
-        <button @click="goto()" class="mx-auto btn btn-dark">Добавить задачи</button>
+        
     </div>
 </template>
 

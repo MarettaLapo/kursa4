@@ -5,28 +5,45 @@
 //по факту это двухуровневый список
 <template>
   <div class="row">
-      <div class="col-sm-5">
-        <h4>,</h4>
-          <h4>Информация</h4>
-          <ul class="list-group">
-              <li class="list-group-item" v-for="(user, index) in usersProject" :key="index">
-                      {{user.username}} 
-                <ul class="list-group">
-                    <div v-for="(task, index) in tasksProject" :key="index">
-                    <li class="list-group-item" v-if="user.user_id===task.user_id">
-                            {{task.task_name}}
-                        <div v-if="currentUser.id === user.user_id && task.is_done === 0">
-                            <button @click="updateTask(task.task_id)" class="mx-auto btn btn-dark">Сделано</button>
-                        </div>
-                    </li>
-                    </div>
-                </ul>
-              </li>
-            </ul>
-            <div v-if="us() === currentUser.id">
+      <div class="col-sm-5 col-md-5 container">
+        <h4 class="mt-5">Информация</h4>
+        <div v-if="us() === currentUser.id">
                 <button @click="gotoUsers()" class="mx-auto btn btn-dark">Добавить пользователей</button>
                 <button @click="gotoTasks()" class="mx-auto btn btn-dark">Добавить задачи</button>
             </div>
+            <ul class="list-group">
+              <li class="list-group-item" v-for="(user, index) in usersProject" :key="index">
+                <div class="row row-cols-auto">
+                    <h6 class="mt-2 col">Пользователь:</h6>
+                    <div class="mt-1 col">{{user.username}}</div>
+                </div>
+                <div class="row">
+                    <h6 class="mt-2 col">Задачи:</h6>
+                    <ul class="list-group col-10">
+                        <div v-for="(task, index) in tasksProject" :key="index">
+                        <li class="list-group-item" v-if="user.user_id === task.user_id">
+                            <div class="row">
+                                <div class="mt-2 col">
+                                    <router-link class="btn btn-link" style="background-color: #FFFFFF;" :to="{
+                                              name: 'project-tasks', //берется из router.js
+                                              params: { id: task.task_id }
+                                              }">
+                                                  {{task.task_name}}
+                                </router-link>
+                                </div>
+                                <div class="col-auto" v-if="currentUser.id === user.user_id && task.is_done === 0">
+                                    <button @click="updateTask(task.task_id)" class="btn btn-warning">Выполнить</button>
+                                </div>
+                                <div class="col-auto" v-if="currentUser.id === user.user_id && task.is_done === 1">
+                                    <button class="btn btn-success">Выполнено</button>
+                                </div>
+                            </div>
+                        </li>
+                        </div>
+                    </ul>
+                </div>
+              </li>
+          </ul>   
       </div>
   </div>
 </template>

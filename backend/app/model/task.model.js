@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.STRING(300),
                 allowNull: false
             },
+            description:{
+                type: Sequelize.STRING(600),
+                allowNull: true
+            },
             is_done: {
                 type: Sequelize.BOOLEAN, // тип данных BOOLEAN (в MySQL — TINYINT)
                 allowNull: false,
