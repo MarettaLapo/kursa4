@@ -8,10 +8,12 @@
       <div class="col-sm-5 col-md-5 container" v-if="displayContent">
         <h4 class="mt-5">Информация</h4>
         <div v-if="us() === currentUser.id">
-                <button @click="$router.push('/AddUsersForProject/' + this.currentProject)" class="mx-auto btn btn-dark">Добавить пользователей</button>
-                <button @click="$router.push('/AddTasksForProject/' + this.currentProject)" class="mx-auto btn btn-dark">Добавить задачи</button>
+            <div class="row">
+                <button @click="$router.push('/AddUsersForProject/' + this.currentProject)" class="col mx-2 btn btn-warning">Добавить пользователей</button>
+                <button @click="$router.push('/AddTasksForProject/' + this.currentProject)" class="col mx-2 btn btn-warning">Добавить задачи</button>
             </div>
-            <ul class="list-group">
+        </div>
+            <ul class="mt-2 list-group">
               <li class="list-group-item" v-for="(user, index) in usersProject" :key="index">
                 <div class="row row-cols-auto">
                     <h6 class="mt-2 col">Пользователь:</h6>
@@ -45,9 +47,9 @@
               </li>
           </ul>   
       </div>
-      <div v-else>
-            Контент доступен только авторизованным пользователям
-        </div>
+      <div class="container mt-5" v-else>
+        <div class="row justify-content-md-center"><h4 class="col col-lg-5">Контент доступен только авторизованным пользователям</h4></div>
+      </div>
   </div>
 </template>
 

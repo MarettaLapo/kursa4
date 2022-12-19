@@ -31,8 +31,8 @@
             <button @click="$router.push('/ProjectInfo/' + this.currentProject);" class="mt-2 btn btn-success">Создать проект</button>
         </ul>
   </div>
-  <div v-else>
-            Контент доступен только авторизованным пользователям
+  <div class="container mt-5" v-else>
+    <div class="row justify-content-md-center"><h4 class="col col-lg-5">Контент доступен только авторизованным пользователям</h4></div>
   </div>
 </template>
 <script>

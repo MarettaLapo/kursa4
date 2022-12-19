@@ -44,10 +44,9 @@
                       </li>
                   </ul>
             </div>
-            
         </div>
-        <div v-else>
-            Контент доступен только авторизованным пользователям
+        <div class="container mt-5" v-else>
+            <div class="row justify-content-md-center"><h4 class="col mt-4 col-lg-5">Контент доступен только авторизованным пользователям</h4></div>
         </div>
     </div>
   </template>
